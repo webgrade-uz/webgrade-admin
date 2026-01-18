@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { toast } from 'sonner';
+import { useAuthStore } from '@/store/authStore';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
@@ -16,7 +17,7 @@ export default function Blogs() {
   const [formData, setFormData] = useState({ title: '', content: '', image: null });
   const [submitting, setSubmitting] = useState(false);
 
-  const token = localStorage.getItem('token');
+  const token = useAuthStore((state) => state.token);
 
   useEffect(() => {
     fetchBlogs();

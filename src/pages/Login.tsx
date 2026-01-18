@@ -5,9 +5,7 @@ import { LogIn } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { useAuthStore } from '@/store/authStore';
-import { useThemeStore } from '@/store/themeStore';
 import { toast } from 'sonner';
-import { useEffect } from 'react';
 
 const loginSchema = z.object({
   email: z.string().email('Email noto\'g\'ri'),
@@ -16,24 +14,16 @@ const loginSchema = z.object({
 
 type LoginFormValues = z.infer<typeof loginSchema>;
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+
 export default function Login() {
   const setToken = useAuthStore((state) => state.setToken);
-  const theme = useThemeStore((state) => state.theme);
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
   });
 
-  useEffect(() => {
-    if (theme === 'dark') {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  }, [theme]);
-
   const onSubmit = async (data: LoginFormValues) => {
     try {
-      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
       const response = await fetch(`${API_URL}/admin/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
