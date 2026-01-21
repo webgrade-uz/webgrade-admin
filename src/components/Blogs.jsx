@@ -96,12 +96,12 @@ export default function Blogs() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 md:space-y-6">
       {/* Header */}
-      <div className="flex justify-between items-center">
-        <div>
-          <h2 className="text-2xl font-bold text-slate-900 dark:text-white">Bloglar</h2>
-          <p className="text-slate-600 dark:text-slate-400">Blog postlarini boshqaring</p>
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-3 md:gap-4">
+        <div className="min-w-0">
+          <h2 className="text-xl md:text-2xl font-bold text-slate-900 dark:text-white">Bloglar</h2>
+          <p className="text-xs md:text-sm text-slate-600 dark:text-slate-400 mt-1">Blog postlarini boshqaring</p>
         </div>
         <Button
           onClick={() => {
@@ -109,7 +109,7 @@ export default function Blogs() {
             setFormData({ title: '', content: '', image: null });
             setShowModal(true);
           }}
-          className="bg-blue-600 hover:bg-blue-700 text-white"
+          className="bg-blue-600 hover:bg-blue-700 text-white w-full sm:w-auto flex-shrink-0"
         >
           <Plus className="w-4 h-4 mr-2" />
           Yangi Blog
@@ -118,43 +118,43 @@ export default function Blogs() {
 
       {/* Search */}
       <div className="relative">
-        <Search className="absolute left-3 top-3 w-5 h-5 text-slate-400" />
+        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 md:w-5 md:h-5 text-slate-400 flex-shrink-0" />
         <input
           placeholder="Blogni qidirish..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="pl-10 pr-4 py-2 w-full border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          className="pl-10 pr-4 py-2 w-full border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
         />
       </div>
 
-      {/* Table */}
-      <Card className="overflow-hidden dark:bg-slate-800 dark:border-slate-700">
+      {/* Table - Desktop */}
+      <Card className="hidden md:block overflow-hidden dark:bg-slate-800 dark:border-slate-700">
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead className="bg-slate-100 dark:bg-slate-700 border-b border-slate-200 dark:border-slate-600">
               <tr>
-                <th className="px-6 py-4 text-left text-sm font-semibold text-slate-900 dark:text-white">Sarlavha</th>
-                <th className="px-6 py-4 text-left text-sm font-semibold text-slate-900 dark:text-white">Mazmun</th>
-                <th className="px-6 py-4 text-left text-sm font-semibold text-slate-900 dark:text-white">Ko'rishlar</th>
-                <th className="px-6 py-4 text-left text-sm font-semibold text-slate-900 dark:text-white">Yaratilgan</th>
-                <th className="px-6 py-4 text-left text-sm font-semibold text-slate-900 dark:text-white">Amallar</th>
+                <th className="px-4 md:px-6 py-3 md:py-4 text-left text-xs md:text-sm font-semibold text-slate-900 dark:text-white">Sarlavha</th>
+                <th className="px-4 md:px-6 py-3 md:py-4 text-left text-xs md:text-sm font-semibold text-slate-900 dark:text-white">Mazmun</th>
+                <th className="px-4 md:px-6 py-3 md:py-4 text-left text-xs md:text-sm font-semibold text-slate-900 dark:text-white">Ko'rishlar</th>
+                <th className="px-4 md:px-6 py-3 md:py-4 text-left text-xs md:text-sm font-semibold text-slate-900 dark:text-white">Yaratilgan</th>
+                <th className="px-4 md:px-6 py-3 md:py-4 text-left text-xs md:text-sm font-semibold text-slate-900 dark:text-white">Amallar</th>
               </tr>
             </thead>
             <tbody>
               {filteredBlogs.map((blog) => (
                 <tr key={blog.id} className="border-b border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
-                  <td className="px-6 py-4 text-sm font-medium text-slate-900 dark:text-white">{blog.title}</td>
-                  <td className="px-6 py-4 text-sm text-slate-600 dark:text-slate-400 max-w-xs truncate">{blog.content}</td>
-                  <td className="px-6 py-4 text-sm">
+                  <td className="px-4 md:px-6 py-3 md:py-4 text-xs md:text-sm font-medium text-slate-900 dark:text-white truncate">{blog.title}</td>
+                  <td className="px-4 md:px-6 py-3 md:py-4 text-xs md:text-sm text-slate-600 dark:text-slate-400 max-w-xs truncate">{blog.content}</td>
+                  <td className="px-4 md:px-6 py-3 md:py-4 text-xs md:text-sm">
                     <div className="flex items-center gap-1 text-slate-600 dark:text-slate-400">
-                      <Eye className="w-4 h-4" />
+                      <Eye className="w-3 h-3 md:w-4 md:h-4" />
                       {blog.views}
                     </div>
                   </td>
-                  <td className="px-6 py-4 text-sm text-slate-600 dark:text-slate-400">
+                  <td className="px-4 md:px-6 py-3 md:py-4 text-xs md:text-sm text-slate-600 dark:text-slate-400">
                     {new Date(blog.createdAt).toLocaleDateString('uz-UZ')}
                   </td>
-                  <td className="px-6 py-4 text-sm">
+                  <td className="px-4 md:px-6 py-3 md:py-4 text-xs md:text-sm">
                     <div className="flex gap-2">
                       <Button
                         onClick={() => {
@@ -163,17 +163,17 @@ export default function Blogs() {
                           setShowModal(true);
                         }}
                         size="sm"
-                        className="bg-blue-600 hover:bg-blue-700"
+                        className="bg-blue-600 hover:bg-blue-700 p-1 md:p-2"
                       >
-                        <Edit2 className="w-4 h-4" />
+                        <Edit2 className="w-3 h-3 md:w-4 md:h-4" />
                       </Button>
                       <Button
                         onClick={() => handleDelete(blog.id)}
                         size="sm"
                         variant="outline"
-                        className="border-red-300 dark:border-red-700 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20"
+                        className="border-red-300 dark:border-red-700 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 p-1 md:p-2"
                       >
-                        <Trash2 className="w-4 h-4" />
+                        <Trash2 className="w-3 h-3 md:w-4 md:h-4" />
                       </Button>
                     </div>
                   </td>
@@ -184,53 +184,102 @@ export default function Blogs() {
         </div>
         {filteredBlogs.length === 0 && (
           <div className="text-center py-12">
-            <p className="text-slate-500 dark:text-slate-400">Hozircha bloglar yo'q</p>
+            <p className="text-slate-500 dark:text-slate-400 text-sm">Hozircha bloglar yo'q</p>
           </div>
         )}
       </Card>
 
+      {/* Cards - Mobile */}
+      <div className="md:hidden space-y-3">
+        {filteredBlogs.map((blog) => (
+          <Card key={blog.id} className="p-4 bg-white dark:bg-slate-800 dark:border-slate-700">
+            <div className="space-y-3">
+              <div>
+                <h3 className="font-semibold text-slate-900 dark:text-white text-sm truncate">{blog.title}</h3>
+                <p className="text-xs text-slate-600 dark:text-slate-400 mt-1 line-clamp-2">{blog.content}</p>
+              </div>
+              <div className="flex items-center justify-between text-xs text-slate-600 dark:text-slate-400">
+                <div className="flex items-center gap-1">
+                  <Eye className="w-3 h-3" />
+                  {blog.views}
+                </div>
+                <span>{new Date(blog.createdAt).toLocaleDateString('uz-UZ')}</span>
+              </div>
+              <div className="flex gap-2 pt-2">
+                <Button
+                  onClick={() => {
+                    setSelectedBlog(blog);
+                    setFormData({ title: blog.title, content: blog.content, image: null });
+                    setShowModal(true);
+                  }}
+                  size="sm"
+                  className="flex-1 bg-blue-600 hover:bg-blue-700 text-xs"
+                >
+                  <Edit2 className="w-3 h-3 mr-1" />
+                  Tahrirlash
+                </Button>
+                <Button
+                  onClick={() => handleDelete(blog.id)}
+                  size="sm"
+                  variant="outline"
+                  className="flex-1 border-red-300 dark:border-red-700 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 text-xs"
+                >
+                  <Trash2 className="w-3 h-3 mr-1" />
+                  O'chirish
+                </Button>
+              </div>
+            </div>
+          </Card>
+        ))}
+        {filteredBlogs.length === 0 && (
+          <div className="text-center py-12">
+            <p className="text-slate-500 dark:text-slate-400 text-sm">Hozircha bloglar yo'q</p>
+          </div>
+        )}
+      </div>
+
       {/* Modal */}
       <Dialog open={showModal} onOpenChange={setShowModal}>
-        <DialogContent className="max-w-2xl dark:bg-slate-800 dark:border-slate-700">
+        <DialogContent className="max-w-full sm:max-w-lg md:max-w-2xl dark:bg-slate-800 dark:border-slate-700 mx-4">
           <DialogHeader>
-            <DialogTitle className="dark:text-white">{selectedBlog ? 'Blogni Tahrirlash' : 'Yangi Blog'}</DialogTitle>
+            <DialogTitle className="dark:text-white text-base md:text-lg">{selectedBlog ? 'Blogni Tahrirlash' : 'Yangi Blog'}</DialogTitle>
           </DialogHeader>
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-3 md:space-y-4">
             <div>
-              <label className="text-sm font-medium text-slate-700 dark:text-slate-300 mb-2 block">Sarlavha</label>
+              <label className="text-xs md:text-sm font-medium text-slate-700 dark:text-slate-300 mb-2 block">Sarlavha</label>
               <input
                 value={formData.title}
                 onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                 placeholder="Blog sarlavhasi"
-                className="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
                 required
               />
             </div>
             <div>
-              <label className="text-sm font-medium text-slate-700 dark:text-slate-300 mb-2 block">Mazmun</label>
+              <label className="text-xs md:text-sm font-medium text-slate-700 dark:text-slate-300 mb-2 block">Mazmun</label>
               <textarea
                 value={formData.content}
                 onChange={(e) => setFormData({ ...formData, content: e.target.value })}
                 placeholder="Blog mazmuni"
-                className="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                rows={6}
+                className="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                rows={4}
                 required
               />
             </div>
             <div>
-              <label className="text-sm font-medium text-slate-700 dark:text-slate-300 mb-2 block">Rasm</label>
+              <label className="text-xs md:text-sm font-medium text-slate-700 dark:text-slate-300 mb-2 block">Rasm</label>
               <input
                 type="file"
                 accept="image/*"
                 onChange={(e) => setFormData({ ...formData, image: e.target.files?.[0] || null })}
-                className="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
               />
             </div>
-            <div className="flex gap-3 pt-4">
+            <div className="flex flex-col sm:flex-row gap-2 md:gap-3 pt-4">
               <Button
                 type="submit"
                 disabled={submitting}
-                className="flex-1 bg-blue-600 hover:bg-blue-700"
+                className="flex-1 bg-blue-600 hover:bg-blue-700 text-sm"
               >
                 {submitting ? 'Yuklanmoqda...' : selectedBlog ? 'Yangilash' : 'Yaratish'}
               </Button>
@@ -238,7 +287,7 @@ export default function Blogs() {
                 type="button"
                 onClick={() => setShowModal(false)}
                 variant="outline"
-                className="flex-1 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-700"
+                className="flex-1 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-700 text-sm"
               >
                 Bekor qilish
               </Button>
