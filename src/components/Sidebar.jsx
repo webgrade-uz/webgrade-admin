@@ -1,4 +1,4 @@
-import { BarChart3, Users, BookOpen, X, Menu } from 'lucide-react';
+import { BarChart3, Users, BookOpen, Menu } from 'lucide-react';
 import { useState } from 'react';
 
 const menuItems = [
@@ -20,9 +20,9 @@ export default function Sidebar({ activeTab, setActiveTab }) {
       {/* Mobile Menu Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="lg:hidden fixed top-4 left-4 z-50 p-2 bg-slate-800 rounded-lg text-white hover:bg-slate-700"
+        className={`lg:hidden fixed top-4 left-4 z-50 p-2 bg-slate-800 rounded-lg text-white hover:bg-slate-700 ${isOpen ? 'hidden' : ''}`}
       >
-        {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+        <Menu className="w-6 h-6" />
       </button>
 
       {/* Overlay */}
@@ -52,8 +52,8 @@ export default function Sidebar({ activeTab, setActiveTab }) {
                   <button
                     onClick={() => handleTabChange(item.id)}
                     className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left transition-colors ${activeTab === item.id
-                        ? 'bg-blue-600 text-white'
-                        : 'text-slate-300 hover:bg-slate-800 hover:text-white'
+                      ? 'bg-blue-600 text-white'
+                      : 'text-slate-300 hover:bg-slate-800 hover:text-white'
                       }`}
                   >
                     <Icon className="w-5 h-5 flex-shrink-0" />
