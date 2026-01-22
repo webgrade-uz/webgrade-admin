@@ -19,8 +19,7 @@ export default function Blogs() {
     content: '',
     image: null,
     description: '',
-    keywords: '',
-    slug: ''
+    keywords: ''
   });
   const [submitting, setSubmitting] = useState(false);
 
@@ -54,7 +53,6 @@ export default function Blogs() {
       formDataObj.append('content', formData.content);
       formDataObj.append('description', formData.description);
       formDataObj.append('keywords', formData.keywords);
-      formDataObj.append('slug', formData.slug);
       if (formData.image) formDataObj.append('image', formData.image);
 
       const res = await fetch(url, {
@@ -67,7 +65,7 @@ export default function Blogs() {
         toast.success(selectedBlog ? 'Blog yangilandi' : 'Blog yaratildi');
         fetchBlogs();
         setShowModal(false);
-        setFormData({ title: '', content: '', image: null, description: '', keywords: '', slug: '' });
+        setFormData({ title: '', content: '', image: null, description: '', keywords: '' });
         setSelectedBlog(null);
       }
     } catch (err) {
@@ -116,7 +114,7 @@ export default function Blogs() {
         <Button
           onClick={() => {
             setSelectedBlog(null);
-            setFormData({ title: '', content: '', image: null, description: '', keywords: '', slug: '' });
+            setFormData({ title: '', content: '', image: null, description: '', keywords: '' });
             setShowModal(true);
           }}
           className="bg-blue-600 hover:bg-blue-700 text-white w-full sm:w-auto flex-shrink-0"
@@ -174,8 +172,7 @@ export default function Blogs() {
                             content: blog.content,
                             image: null,
                             description: blog.description || '',
-                            keywords: blog.keywords || '',
-                            slug: blog.slug || ''
+                            keywords: blog.keywords || ''
                           });
                           setShowModal(true);
                         }}
@@ -231,8 +228,7 @@ export default function Blogs() {
                       content: blog.content,
                       image: null,
                       description: blog.description || '',
-                      keywords: blog.keywords || '',
-                      slug: blog.slug || ''
+                      keywords: blog.keywords || ''
                     });
                     setShowModal(true);
                   }}
@@ -317,15 +313,6 @@ export default function Blogs() {
                 value={formData.keywords}
                 onChange={(e) => setFormData({ ...formData, keywords: e.target.value })}
                 placeholder="keyword1, keyword2, keyword3"
-                className="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
-              />
-            </div>
-            <div>
-              <label className="text-xs md:text-sm font-medium text-slate-700 dark:text-slate-300 mb-2 block">URL Slug</label>
-              <input
-                value={formData.slug}
-                onChange={(e) => setFormData({ ...formData, slug: e.target.value })}
-                placeholder="blog-sarlavhasi (avtomatik yaratiladi)"
                 className="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
               />
             </div>
