@@ -259,7 +259,7 @@ export default function Employees() {
 
       {/* Modal */}
       <Dialog open={showModal} onOpenChange={setShowModal}>
-        <DialogContent className="max-w-full sm:max-w-lg md:max-w-2xl dark:bg-slate-800 dark:border-slate-700 mx-4">
+        <DialogContent className="max-w-full sm:max-w-lg md:max-w-2xl dark:bg-slate-800 dark:border-slate-700 mx-0 sm:mx-4 max-h-screen sm:max-h-[90vh] overflow-y-auto rounded-none sm:rounded-lg w-full sm:w-auto">
           <DialogHeader>
             <DialogTitle className="dark:text-white text-base md:text-lg">{selectedEmployee ? 'Xodimni Tahrirlash' : 'Yangi Xodim'}</DialogTitle>
           </DialogHeader>
@@ -270,7 +270,7 @@ export default function Employees() {
                 value={formData.fullName}
                 onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
                 placeholder="Xodim ismi"
-                className="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                className="w-full px-3 py-2.5 md:py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
                 required
               />
             </div>
@@ -280,7 +280,7 @@ export default function Employees() {
                 value={formData.position}
                 onChange={(e) => setFormData({ ...formData, position: e.target.value })}
                 placeholder="Frontend Developer, Backend Developer..."
-                className="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                className="w-full px-3 py-2.5 md:py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
                 required
               />
             </div>
@@ -290,7 +290,7 @@ export default function Employees() {
                 value={formData.role}
                 onChange={(e) => setFormData({ ...formData, role: e.target.value })}
                 placeholder="CEO, CTO, COO..."
-                className="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                className="w-full px-3 py-2.5 md:py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
               />
             </div>
             <div>
@@ -299,24 +299,44 @@ export default function Employees() {
                 value={formData.about}
                 onChange={(e) => setFormData({ ...formData, about: e.target.value })}
                 placeholder="Xodim haqida qisqacha ma'lumot"
-                className="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                className="w-full px-3 py-2.5 md:py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
                 rows={3}
               />
             </div>
             <div>
               <label className="text-xs md:text-sm font-medium text-slate-700 dark:text-slate-300 mb-2 block">Rasm</label>
-              <input
-                type="file"
-                accept="image/*"
-                onChange={(e) => setFormData({ ...formData, image: e.target.files?.[0] || null })}
-                className="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
-              />
+              <div className="relative border-2 border-dashed border-slate-300 dark:border-slate-600 rounded-lg p-4 text-center hover:border-blue-500 transition cursor-pointer"
+                onDragOver={(e) => e.preventDefault()}
+                onDrop={(e) => {
+                  e.preventDefault();
+                  const file = e.dataTransfer.files?.[0];
+                  if (file?.type.startsWith('image/')) {
+                    setFormData({ ...formData, image: file });
+                  }
+                }}
+              >
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => setFormData({ ...formData, image: e.target.files?.[0] || null })}
+                  className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                />
+                {formData.image ? (
+                  <div className="text-sm text-green-600 dark:text-green-400">
+                    ✓ {formData.image.name}
+                  </div>
+                ) : (
+                  <div className="text-sm text-slate-600 dark:text-slate-400">
+                    <p>Rasm tanlang yoki shu yerga tashlang</p>
+                  </div>
+                )}
+              </div>
             </div>
             <div className="flex flex-col sm:flex-row gap-2 md:gap-3 pt-4">
               <Button
                 type="submit"
                 disabled={submitting}
-                className="flex-1 bg-blue-600 hover:bg-blue-700 text-sm"
+                className="flex-1 bg-blue-600 hover:bg-blue-700 text-sm py-2.5 md:py-2"
               >
                 {submitting ? 'Yuklanmoqda...' : selectedEmployee ? 'Yangilash' : 'Qo\'shish'}
               </Button>
@@ -324,7 +344,7 @@ export default function Employees() {
                 type="button"
                 onClick={() => setShowModal(false)}
                 variant="outline"
-                className="flex-1 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-700 text-sm"
+                className="flex-1 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-700 text-sm py-2.5 md:py-2"
               >
                 Bekor qilish
               </Button>

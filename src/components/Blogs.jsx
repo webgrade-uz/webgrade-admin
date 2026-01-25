@@ -260,7 +260,7 @@ export default function Blogs() {
 
       {/* Modal */}
       <Dialog open={showModal} onOpenChange={setShowModal}>
-        <DialogContent className="max-w-full sm:max-w-lg md:max-w-2xl dark:bg-slate-800 dark:border-slate-700 mx-4 max-h-[90vh] overflow-y-auto">
+        <DialogContent className="max-w-full sm:max-w-lg md:max-w-2xl dark:bg-slate-800 dark:border-slate-700 mx-0 sm:mx-4 max-h-screen sm:max-h-[90vh] overflow-y-auto rounded-none sm:rounded-lg w-full sm:w-auto p-4 sm:p-6">
           <DialogHeader>
             <DialogTitle className="dark:text-white text-base md:text-lg">{selectedBlog ? 'Blogni Tahrirlash' : 'Yangi Blog'}</DialogTitle>
           </DialogHeader>
@@ -271,7 +271,7 @@ export default function Blogs() {
                 value={formData.title}
                 onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                 placeholder="Blog sarlavhasi"
-                className="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                className="w-full px-3 py-2.5 md:py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
                 required
               />
             </div>
@@ -281,19 +281,39 @@ export default function Blogs() {
                 value={formData.content}
                 onChange={(e) => setFormData({ ...formData, content: e.target.value })}
                 placeholder="Blog mazmuni"
-                className="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                className="w-full px-3 py-2.5 md:py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
                 rows={4}
                 required
               />
             </div>
             <div>
               <label className="text-xs md:text-sm font-medium text-slate-700 dark:text-slate-300 mb-2 block">Rasm</label>
-              <input
-                type="file"
-                accept="image/*"
-                onChange={(e) => setFormData({ ...formData, image: e.target.files?.[0] || null })}
-                className="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
-              />
+              <div className="relative border-2 border-dashed border-slate-300 dark:border-slate-600 rounded-lg p-4 text-center hover:border-blue-500 transition cursor-pointer"
+                onDragOver={(e) => e.preventDefault()}
+                onDrop={(e) => {
+                  e.preventDefault();
+                  const file = e.dataTransfer.files?.[0];
+                  if (file?.type.startsWith('image/')) {
+                    setFormData({ ...formData, image: file });
+                  }
+                }}
+              >
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => setFormData({ ...formData, image: e.target.files?.[0] || null })}
+                  className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                />
+                {formData.image ? (
+                  <div className="text-sm text-green-600 dark:text-green-400">
+                    ✓ {formData.image.name}
+                  </div>
+                ) : (
+                  <div className="text-sm text-slate-600 dark:text-slate-400">
+                    <p>Rasm tanlang yoki shu yerga tashlang</p>
+                  </div>
+                )}
+              </div>
             </div>
             <div>
               <label className="text-xs md:text-sm font-medium text-slate-700 dark:text-slate-300 mb-2 block">Meta Description (SEO)</label>
@@ -301,7 +321,7 @@ export default function Blogs() {
                 value={formData.description}
                 onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                 placeholder="Blog haqida qisqacha ma'lumot (160 belgi)"
-                className="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                className="w-full px-3 py-2.5 md:py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
                 rows={2}
                 maxLength={160}
               />
@@ -313,14 +333,14 @@ export default function Blogs() {
                 value={formData.keywords}
                 onChange={(e) => setFormData({ ...formData, keywords: e.target.value })}
                 placeholder="keyword1, keyword2, keyword3"
-                className="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                className="w-full px-3 py-2.5 md:py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
               />
             </div>
             <div className="flex flex-col sm:flex-row gap-2 md:gap-3 pt-4">
               <Button
                 type="submit"
                 disabled={submitting}
-                className="flex-1 bg-blue-600 hover:bg-blue-700 text-sm"
+                className="flex-1 bg-blue-600 hover:bg-blue-700 text-sm py-2.5 md:py-2"
               >
                 {submitting ? 'Yuklanmoqda...' : selectedBlog ? 'Yangilash' : 'Yaratish'}
               </Button>
@@ -328,7 +348,7 @@ export default function Blogs() {
                 type="button"
                 onClick={() => setShowModal(false)}
                 variant="outline"
-                className="flex-1 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-700 text-sm"
+                className="flex-1 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-700 text-sm py-2.5 md:py-2"
               >
                 Bekor qilish
               </Button>
